@@ -30,9 +30,7 @@ function EditProfile() {
     emailInputRef.current.value = storeObj.loginReducer.loginDetails.email;
     mobileNoInputRef.current.value =
       storeObj.loginReducer.loginDetails.mobileNo;
-    setProfilePic(
-      `http://localhost:4567/${storeObj.loginReducer.loginDetails.profilePic}`
-    );
+    setProfilePic(`/${storeObj.loginReducer.loginDetails.profilePic}`);
   };
 
   let onUpdateProfile = async () => {
@@ -56,10 +54,7 @@ function EditProfile() {
       body: dataToSend,
     };
 
-    let JSONData = await fetch(
-      "http://localhost:4567/updateProfile",
-      reqOptions
-    );
+    let JSONData = await fetch("/updateProfile", reqOptions);
 
     let JSOData = await JSONData.json();
     alert(JSOData.msg);

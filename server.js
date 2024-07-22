@@ -4,6 +4,7 @@ const cors = require("cors");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const path = require("path");
 const dotEnv = require("dotenv");
 dotEnv.config();
 
@@ -24,6 +25,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use("/profilePics", express.static("profilePics"));
+app.use(express.static(path.join(__dirname, "./client/build")));
 
 let userSchema = new mongoose.Schema({
   firstName: String,
@@ -36,6 +38,10 @@ let userSchema = new mongoose.Schema({
 });
 
 let User = new mongoose.model("users", userSchema);
+
+app.get("*", (req, res) => {
+  res.sendFile("./client/build/index.html");
+});
 
 app.post("/signup", upload.single("profilePic"), async (req, res) => {
   console.log(req.body);
